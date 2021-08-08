@@ -51,7 +51,7 @@ def set_info():
         response_body = {
             'message': 'JSON received, value has been updated',
             'key': data.get("key"),
-            'value': data.get("value"),
+            'new value': data.get("value"),
             'status code': '200'
         }
         res = make_response(jsonify(response_body), 200)
@@ -68,7 +68,7 @@ def get_key():
 
     if not search_key:
         response_body = {
-            'message': "key not input, please include the key you're searching for in the url parameters",
+            'message': "ERROR: key not input, please include the key you're searching for in the url parameters",
         }
     else:
         found_object = Data.query.filter_by(key=search_key).first()
@@ -83,7 +83,7 @@ def get_key():
             }
         else:
             response_body = {
-                'message': 'key not found in database',
+                'message': 'ERROR: key not found in database',
             }
     res = make_response(jsonify(response_body), 200)
     return res
@@ -101,7 +101,7 @@ def delete_key():
 
     if incoming_data is None:
         response_body = {
-            'message': "key parameter is missing, please include the key you'd like to delete in the JSON POST body"
+            'message': "ERROR: key parameter is missing, please include the key you'd like to delete in the JSON POST body"
         }
         res = make_response(jsonify(response_body), 200)
     else:
@@ -115,7 +115,7 @@ def delete_key():
             }
         else:
             response_body = {
-                'message': "key does not exist within database, please input existing key"
+                'message': "ERROR: key does not exist within database, please input existing key"
             }
         res = make_response(jsonify(response_body), 200)
 
