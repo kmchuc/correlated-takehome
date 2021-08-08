@@ -62,7 +62,7 @@ This is an example of how to list things you need to use the software and how to
 
 <!-- USAGE EXAMPLES -->
 ### Usage
-I've deployed this app using Heroku, but since a front-end hasn't been made yet, I deployed the repo using Heroku, which could also run on Postman (https://www.postman.com/). As required, the repo runs on a PORT:4000, so either way should work with endpoints. 
+I've deployed this app using Heroku, but since a front-end hasn't been made yet, the local host could also run on Postman (https://www.postman.com/). As required, the repo runs on a PORT:4000.
 
 ### "Set" endpoint:
 I created a '/set' endpoint using a POST HTTP method when containing a JSON POST body formating like:
