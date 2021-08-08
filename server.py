@@ -1,7 +1,26 @@
 from model import connect_to_db, db, Data
 from flask import Flask, request, jsonify, make_response
+from flask_restful import Resource, Api
+from flask_cors import CORS
 
 app = Flask(__name__)
+api = Api(app)
+CORS(app)
+
+class status(Resource):
+    def get(self):
+        try:
+            return {'data': 'Api is running'}
+        except:
+            return {'data': 'An Error occured during fetching API'}
+
+class Response(Resource):
+    def get(self, key):
+        return jsonify({'key': key})
+
+
+api.add_resource(status, '/')
+api.add_resource(Response, '/get?key=<key>')
 
 @app.route('/')
 def homepage():
