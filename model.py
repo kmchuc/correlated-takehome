@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import os
+# import os
 
-data_uri = os.environ['DATA_URI']
+# data_uri = os.environ['DATA_URI']
 app = Flask(__name__)
 
 db = SQLAlchemy()
@@ -29,8 +29,8 @@ class Data(db.Model):
 def connect_to_db(app):
     # connects db to Flask app
     #uncomment to run the datatbase locally 
-    # app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///correlated"
-    app.config["SQLALCHEMY_DATABASE_URI"] = data_uri
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///correlated"
+    # app.config["SQLALCHEMY_DATABASE_URI"] = data_uri
     app.config["SQLALCHEMY_ECHO"] = True
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
