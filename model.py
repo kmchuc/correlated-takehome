@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 
+data_uri = os.environ['DATA_URI']
 app = Flask(__name__)
 
 db = SQLAlchemy()
@@ -29,7 +30,7 @@ def connect_to_db(app):
     # connects db to Flask app
     #uncomment to run the datatbase locally 
     # app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///correlated"
-    app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://vkuxjtkdkfcofw:da9dc7e48ef0e36e3355f98af8aca1f65b7fe1fa31fde8424d6e32172faa8fb0@ec2-18-213-219-169.compute-1.amazonaws.com:5432/dbhtdg9vg6h4tf'
+    app.config["SQLALCHEMY_DATABASE_URI"] = data_uri
     app.config["SQLALCHEMY_ECHO"] = True
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
