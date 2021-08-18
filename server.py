@@ -1,26 +1,26 @@
 from model import connect_to_db, db, Data
 from flask import Flask, request, jsonify, make_response
-from flask_restful import Resource, Api
+# from flask_restful import Resource, Api
 from flask_cors import CORS
 
 app = Flask(__name__)
-api = Api(app)
+# api = Api(app)
 CORS(app)
 
-class status(Resource):
-    def get(self):
-        try:
-            return {'data': 'Api is running'}
-        except:
-            return {'data': 'An Error occured during fetching API'}
+# class status(Resource):
+#     def get(self):
+#         try:
+#             return {'data': 'Api is running'}
+#         except:
+#             return {'data': 'An Error occured during fetching API'}
 
-class Response(Resource):
-    def get(self, key):
-        return jsonify({'key': key})
+# class Response(Resource):
+#     def get(self, key):
+#         return jsonify({'key': key})
 
 
-api.add_resource(status, '/')
-api.add_resource(Response, '/get?key=<key>')
+# api.add_resource(status, '/')
+# api.add_resource(Response, '/get?key=<key>')
 
 @app.route('/')
 def homepage():
@@ -63,9 +63,9 @@ def set_info():
             'value': data.get("value"),
             'status code': '200'
         }
-        res = make_response(jsonify(response_body), 200)
+
     else:
-        value_updated = Data.query.filter_by(key=incoming_key).update(dict(value=incoming_value))
+        Data.query.filter_by(key=incoming_key).update(dict(value=incoming_value))
         db.session.commit()
         response_body = {
             'message': 'JSON received, value has been updated',
@@ -73,8 +73,8 @@ def set_info():
             'new value': data.get("value"),
             'status code': '200'
         }
-        res = make_response(jsonify(response_body), 200)
-
+    
+    res = make_response(jsonify(response_body), 200)
     return res
 
 @app.route('/get', methods=['GET'])
@@ -122,12 +122,12 @@ def delete_key():
         response_body = {
             'message': "ERROR: key parameter is missing, please include the key you'd like to delete in the JSON POST body"
         }
-        res = make_response(jsonify(response_body), 200)
+
     else:
         requested_key = incoming_data['key']
         found_key = Data.query.filter_by(key=requested_key).first()
         if found_key:
-            Data.query.filter_by(key=requested_key).delete()
+            found_key.delete()
             db.session.commit()
             response_body = {
                 'message': "the key: " + found_key.key + " has been deleted"
@@ -136,8 +136,8 @@ def delete_key():
             response_body = {
                 'message': "ERROR: key does not exist within database, please input existing key"
             }
-        res = make_response(jsonify(response_body), 200)
-
+    
+    res = make_response(jsonify(response_body), 200)
     return res
 
 
